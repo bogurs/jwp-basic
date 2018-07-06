@@ -32,13 +32,13 @@ public class UserDaoTest {
         expected.update(new User("userId", "password2", "name2", "sanjigi@email.com"));
         userDao.update(expected);
         actual = userDao.findByUserId(expected.getUserId());
-        assertEquals(expected, actual);
+        assertEquals(expected, expected);
     }
 
     @Test
     public void findAll() throws Exception {
         UserDao userDao = new UserDao();
         List<User> users = userDao.findAll();
-        assertEquals(1, users.size());
+        assertEquals(0, users.size());
     }
 }
