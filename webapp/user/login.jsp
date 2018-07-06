@@ -42,7 +42,11 @@
                         <li><a href="https://facebook.com" target="_blank">Facebook</a></li>
                     </ul>
                 </li>
+<<<<<<< HEAD
                 <li><a href="/user/list"><i class="glyphicon glyphicon-user"></i></a></li>
+=======
+                <li><a href="../user/list.html"><i class="glyphicon glyphicon-user"></i></a></li>
+>>>>>>> branch 'step0-getting-started' of https://github.com/bogurs/jwp-basic.git
             </ul>
         </div>
     </div>

@@ -29,8 +29,11 @@ public class LoginServlet extends HttpServlet {
         		HttpSession session = req.getSession();
                 session.setAttribute("user", user);
                 resp.sendRedirect("/index.jsp");
+<<<<<<< HEAD
     		} else { //등록된 Id를 찾았지만 패스워드가 일치하지 않는 경우(로그인 실패)
     			resp.sendRedirect("/user/login_failed.jsp");
+=======
+>>>>>>> branch 'step0-getting-started' of https://github.com/bogurs/jwp-basic.git
     		}
     	} else { //등록된 Id를 찾을 수 없는 경우(로그인 실패)
     		resp.sendRedirect("/user/login_failed.jsp");
