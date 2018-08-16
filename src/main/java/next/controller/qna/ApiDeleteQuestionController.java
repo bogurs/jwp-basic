@@ -7,11 +7,13 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 import next.CannotDeleteException;
 import next.controller.UserSessionUtils;
+import next.dao.AnswerDao;
+import next.dao.QuestionDao;
 import next.model.Result;
 import next.service.QnaService;
 
 public class ApiDeleteQuestionController extends AbstractController {
-    private QnaService qnaService = QnaService.getInstance();
+    private QnaService qnaService = QnaService.getInstance(QuestionDao.getInstance(), AnswerDao.getInstance());
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
