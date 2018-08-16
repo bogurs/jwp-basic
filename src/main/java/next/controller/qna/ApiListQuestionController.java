@@ -5,10 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
+import next.dao.JdbcQuestionDao;
 import next.dao.QuestionDao;
 
 public class ApiListQuestionController extends AbstractController {
-    private QuestionDao questionDao = QuestionDao.getInstance();
+    private QuestionDao questionDao = JdbcQuestionDao.getInstance();
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse resp) throws Exception {
