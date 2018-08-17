@@ -48,6 +48,10 @@ public class Answer {
     public long getQuestionId() {
         return questionId;
     }
+    
+    public boolean canDelete(User user) {
+		return user.isSameUser(this.writer);
+	}
 
     @Override
     public int hashCode() {
@@ -76,4 +80,5 @@ public class Answer {
         return "Answer [answerId=" + answerId + ", writer=" + writer + ", contents=" + contents + ", createdDate="
                 + createdDate + ", questionId=" + questionId + "]";
     }
+
 }
