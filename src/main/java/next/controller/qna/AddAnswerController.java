@@ -10,8 +10,6 @@ import core.mvc.AbstractController;
 import core.mvc.ModelAndView;
 import next.controller.UserSessionUtils;
 import next.dao.AnswerDao;
-import next.dao.JdbcAnswerDao;
-import next.dao.JdbcQuestionDao;
 import next.dao.QuestionDao;
 import next.model.Answer;
 import next.model.Result;
@@ -20,8 +18,13 @@ import next.model.User;
 public class AddAnswerController extends AbstractController {
     private static final Logger log = LoggerFactory.getLogger(AddAnswerController.class);
 
-    private QuestionDao questionDao = JdbcQuestionDao.getInstance();
-    private AnswerDao answerDao = JdbcAnswerDao.getInstance();
+    private QuestionDao questionDao;
+    private AnswerDao answerDao;
+    
+    public AddAnswerController(QuestionDao questionDao, AnswerDao answerDao) {
+		this.questionDao = questionDao;
+		this.answerDao = answerDao;
+	}
 
     @Override
     public ModelAndView execute(HttpServletRequest req, HttpServletResponse response) throws Exception {

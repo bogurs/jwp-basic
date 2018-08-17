@@ -15,7 +15,7 @@ public class QnaService {
     private QuestionDao questionDao;
     private AnswerDao answerDao;
 
-    private QnaService(QuestionDao questionDao, AnswerDao answerDao) {
+    public QnaService(QuestionDao questionDao, AnswerDao answerDao) {
     	this.questionDao = questionDao;
     	this.answerDao = answerDao;
     }
