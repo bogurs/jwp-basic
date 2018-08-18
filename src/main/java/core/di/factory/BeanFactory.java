@@ -1,6 +1,5 @@
 package core.di.factory;
 
-import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -10,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-
-import core.annotation.Controller;
 
 public class BeanFactory implements BeanDefinitionRegistry {
     private static final Logger logger = LoggerFactory.getLogger(BeanFactory.class);
@@ -61,17 +58,6 @@ public class BeanFactory implements BeanDefinitionRegistry {
         beans.put(clazz, bean);
     }
 
-    public Map<Class<?>, Object> getControllers() {
-        Map<Class<?>, Object> controllers = Maps.newHashMap();
-        for (Class<?> clazz : preInstanticateBeans) {
-            Annotation annotation = clazz.getAnnotation(Controller.class);
-            if (annotation != null) {
-                controllers.put(clazz, beans.get(clazz));
-            }
-        }
-        return controllers;
-    }
-
     void clear() {
         preInstanticateBeans.clear();
         beans.clear();
@@ -81,5 +67,9 @@ public class BeanFactory implements BeanDefinitionRegistry {
 	public void registerBeanDefinition(Class<?> clazz, BeanDefinition beanDefinition) {
 		logger.debug("register bean : {}", clazz);
 		beanDefinitions.put(clazz, beanDefinition);
+	}
+
+	public Set<Class<?>> getBeanClasses() {
+		return beanDefinitions.keySet();
 	}
 }
