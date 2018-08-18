@@ -2,8 +2,13 @@ package core.di.factory;
 
 import static org.reflections.ReflectionUtils.getAllConstructors;
 import static org.reflections.ReflectionUtils.withAnnotation;
+import static org.reflections.ReflectionUtils.withReturnType;
+import static org.reflections.ReflectionUtils.getAllFields;
+import static org.reflections.ReflectionUtils.getAllMethods;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Set;
 
 import com.google.common.collect.Sets;
@@ -49,4 +54,14 @@ public class BeanFactoryUtils {
 
         throw new IllegalStateException(injectedClazz + "인터페이스를 구현하는 Bean이 존재하지 않는다.");
     }
+
+	@SuppressWarnings("unchecked")
+	public static Set<Field> getInjectedFields(Class<?> clazz) {
+		return getAllFields(clazz, withAnnotation(Inject.class));
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Set<Method> getInjectedMethods(Class<?> clazz) {
+		return getAllMethods(clazz, withAnnotation(Inject.class), withReturnType(void.class));
+	}
 }
