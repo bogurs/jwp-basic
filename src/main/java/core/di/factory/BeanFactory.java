@@ -13,7 +13,7 @@ import com.google.common.collect.Maps;
 
 import core.annotation.Controller;
 
-public class BeanFactory {
+public class BeanFactory implements BeanDefinitionRegistry {
     private static final Logger logger = LoggerFactory.getLogger(BeanFactory.class);
 
     private Set<Class<?>> preInstanticateBeans;
@@ -21,6 +21,11 @@ public class BeanFactory {
     private Map<Class<?>, Object> beans = Maps.newHashMap();
 
     private List<Injector> injectors;
+    
+    private Map<Class<?>, BeanDefinition> beanDefinitions = Maps.newHashMap();
+    
+    public BeanFactory() {
+    }
 
     public BeanFactory(Set<Class<?>> preInstanticateBeans) {
         this.preInstanticateBeans = preInstanticateBeans;
@@ -28,7 +33,7 @@ public class BeanFactory {
         injectors = Arrays.asList(new FieldInjector(this), new SetterInjector(this), new ConstructorInjector(this));
     }
 
-    public Set<Class<?>> getPreInstanticateBeans() {
+	public Set<Class<?>> getPreInstanticateBeans() {
         return preInstanticateBeans;
     }
 
@@ -71,4 +76,10 @@ public class BeanFactory {
         preInstanticateBeans.clear();
         beans.clear();
     }
+
+	@Override
+	public void registerBeanDefinition(Class<?> clazz, BeanDefinition beanDefinition) {
+		logger.debug("register bean : {}", clazz);
+		beanDefinitions.put(clazz, beanDefinition);
+	}
 }
