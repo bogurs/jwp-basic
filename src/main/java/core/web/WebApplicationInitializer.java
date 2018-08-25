@@ -1,4 +1,4 @@
-package core.web.mvc;
+package core.web;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;

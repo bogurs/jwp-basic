@@ -1,4 +1,4 @@
-package core.web.mvc;
+package core.web;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -6,6 +6,9 @@ import javax.servlet.ServletRegistration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import core.web.mvc.AnnotationHandlerMapping;
+import core.web.mvc.DispatcherServlet;
 
 public class MyWebApplicationInitializer implements WebApplicationInitializer {
 	private static final Logger logger = LoggerFactory.getLogger(MyWebApplicationInitializer.class);
