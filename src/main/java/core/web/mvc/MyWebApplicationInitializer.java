@@ -12,7 +12,9 @@ public class MyWebApplicationInitializer implements WebApplicationInitializer {
 
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet("next"));
+		AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("next");
+		ahm.initialize();
+		ServletRegistration.Dynamic dispatcher = servletContext.addServlet("dispatcher", new DispatcherServlet(ahm));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
 		

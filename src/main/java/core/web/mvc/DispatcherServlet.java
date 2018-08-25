@@ -23,17 +23,15 @@ public class DispatcherServlet extends HttpServlet {
     private List<HandlerMapping> mappings = Lists.newArrayList();
     private List<HandlerAdapter> handlerAdapters = Lists.newArrayList();
     
-    private Object[] basePackages;
+    private HandlerMapping hm;
     
-    public DispatcherServlet(Object... basePackages) {
-    	this.basePackages = basePackages;
+    public DispatcherServlet(HandlerMapping hm) {
+    	this.hm = hm;
 	}
 
     @Override
     public void init() throws ServletException {
-        AnnotationHandlerMapping ahm = new AnnotationHandlerMapping(basePackages);
-        ahm.initialize();
-        mappings.add(ahm);
+        mappings.add(hm);
         handlerAdapters.add(new HandlerExecutionHandlerAdapter());
     }
 
