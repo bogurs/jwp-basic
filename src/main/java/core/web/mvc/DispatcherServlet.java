@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,17 +16,22 @@ import com.google.common.collect.Lists;
 import core.web.view.ModelAndView;
 import core.web.view.View;
 
-@WebServlet(name = "dispatcher", urlPatterns = "/", loadOnStartup = 1)
 public class DispatcherServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = LoggerFactory.getLogger(DispatcherServlet.class);
 
     private List<HandlerMapping> mappings = Lists.newArrayList();
     private List<HandlerAdapter> handlerAdapters = Lists.newArrayList();
+    
+    private Object[] basePackages;
+    
+    public DispatcherServlet(Object... basePackages) {
+    	this.basePackages = basePackages;
+	}
 
     @Override
     public void init() throws ServletException {
-        AnnotationHandlerMapping ahm = new AnnotationHandlerMapping("next");
+        AnnotationHandlerMapping ahm = new AnnotationHandlerMapping(basePackages);
         ahm.initialize();
         mappings.add(ahm);
         handlerAdapters.add(new HandlerExecutionHandlerAdapter());
