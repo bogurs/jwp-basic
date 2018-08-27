@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
 import core.jdbc.ConnectionManager;
+import core.jdbc.JdbcTemplate;
 import next.model.User;
 
 public class UserDaoTest {
@@ -22,7 +23,7 @@ public class UserDaoTest {
     @Test
     public void crud() throws Exception {
         User expected = new User("userId", "password", "name", "javajigi@email.com");
-        UserDao userDao = new UserDao();
+        UserDao userDao = new UserDao(new JdbcTemplate());
         userDao.insert(expected);
 
         User actual = userDao.findByUserId(expected.getUserId());
