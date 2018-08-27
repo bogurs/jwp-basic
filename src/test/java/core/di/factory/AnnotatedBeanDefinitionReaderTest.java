@@ -1,17 +1,17 @@
 package core.di.factory;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 import javax.sql.DataSource;
 
 import org.junit.Test;
 
-import core.di.factory.BeanFactory;
 import di.examples.ExampleConfig;
 
 public class AnnotatedBeanDefinitionReaderTest {
+
 	@Test
-	public void register_simple() {
+	public void test() {
 		BeanFactory beanFactory = new BeanFactory();
 		AnnotatedBeanDefinitionReader abdr = new AnnotatedBeanDefinitionReader(beanFactory);
 		abdr.register(ExampleConfig.class);
@@ -19,4 +19,5 @@ public class AnnotatedBeanDefinitionReaderTest {
 		
 		assertNotNull(beanFactory.getBean(DataSource.class));
 	}
+
 }
