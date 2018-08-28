@@ -4,26 +4,23 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.jdbc.datasource.init.DatabasePopulatorUtils;
-import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import core.jdbc.ConnectionManager;
-import core.jdbc.JdbcTemplate;
+import core.di.factory.AnnotationConfigApplicationContext;
+import next.config.MyConfiguration;
 import next.model.User;
 
 public class UserDaoTest {
+	private UserDao userDao;
+
     @Before
     public void setup() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.addScript(new ClassPathResource("jwp.sql"));
-        DatabasePopulatorUtils.execute(populator, ConnectionManager.getDataSource());
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
+        userDao = ac.getBean(UserDao.class);
     }
 
     @Test
     public void crud() throws Exception {
         User expected = new User("userId", "password", "name", "javajigi@email.com");
-        UserDao userDao = new UserDao(new JdbcTemplate());
         userDao.insert(expected);
 
         User actual = userDao.findByUserId(expected.getUserId());

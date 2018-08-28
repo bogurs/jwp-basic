@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 
-import core.di.factory.ApplicationContext;
+import core.di.factory.AnnotationConfigApplicationContext;
 import core.web.mvc.AnnotationHandlerMapping;
 import core.web.mvc.HandlerExecution;
 import next.config.MyConfiguration;
@@ -15,7 +15,7 @@ public class AnnotationHandlerMappingTest {
 
     @Before
     public void setup() {
-    	ApplicationContext ac = new ApplicationContext(MyConfiguration.class);
+    	AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
         handlerMapping = new AnnotationHandlerMapping(ac);
         handlerMapping.initialize();
     }
