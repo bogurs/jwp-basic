@@ -6,6 +6,8 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import core.annotation.Bean;
+
 public class AnnotatedBeanDefinitionReader {
 	private static final Logger logger = LoggerFactory.getLogger(AnnotatedBeanDefinitionReader.class);
 	
@@ -23,7 +25,7 @@ public class AnnotatedBeanDefinitionReader {
 
 	private void registerBean(Class<?> annotatedClass) {
 		beanDefinitionRegistry.registerBeanDefinition(annotatedClass, new BeanDefinition(annotatedClass));
-		Set<Method> beanMethods = BeanFactoryUtils.getBeanMethods(annotatedClass);
+		Set<Method> beanMethods = BeanFactoryUtils.getBeanMethods(annotatedClass, Bean.class);
 		for (Method beanMethod : beanMethods) {
 			logger.debug("@Bean method : {}", beanMethod);
 			AnnotatedBeanDefinition abd = new AnnotatedBeanDefinition(beanMethod.getReturnType(), beanMethod);

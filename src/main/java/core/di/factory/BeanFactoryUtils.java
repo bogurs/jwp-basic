@@ -6,6 +6,7 @@ import static org.reflections.ReflectionUtils.getAllMethods;
 import static org.reflections.ReflectionUtils.withAnnotation;
 import static org.reflections.ReflectionUtils.withReturnType;
 
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -13,21 +14,19 @@ import java.lang.reflect.Method;
 import java.util.Optional;
 import java.util.Set;
 
-import org.reflections.ReflectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Sets;
 
-import core.annotation.Bean;
 import core.annotation.Inject;
 
 public class BeanFactoryUtils {
 	private static final Logger log = LoggerFactory.getLogger(BeanFactoryUtils.class);
 	
 	@SuppressWarnings("unchecked")
-	public static Set<Method> getBeanMethods(Class<?> clazz){
-		return getAllMethods(clazz, ReflectionUtils.withAnnotation(Bean.class));
+	public static Set<Method> getBeanMethods(Class<?> clazz, Class<? extends Annotation> annotation){
+		return getAllMethods(clazz, withAnnotation(annotation));
 	}
 	
     @SuppressWarnings({ "unchecked" })

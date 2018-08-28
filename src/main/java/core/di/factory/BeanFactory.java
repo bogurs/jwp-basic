@@ -14,6 +14,8 @@ import org.springframework.beans.BeanUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import core.annotation.PostConstruct;
+
 public class BeanFactory implements BeanDefinitionRegistry {
     private static final Logger log = LoggerFactory.getLogger(BeanFactory.class);
 
@@ -49,10 +51,22 @@ public class BeanFactory implements BeanDefinitionRegistry {
         beanDefinition = beanDefinitions.get(concreteClass);
         bean = inject(beanDefinition);
         beans.put(concreteClass, bean);
+        initialize(bean, concreteClass);
         return (T) bean;
     }
 
-    private Object createAnnotatedBean(BeanDefinition beanDefinition) {
+    private void initialize(Object bean, Class<?> beanClass) {
+    	Set<Method> initializeMethods = BeanFactoryUtils.getBeanMethods(beanClass, PostConstruct.class);
+    	if (initializeMethods.isEmpty()) {
+    		return;
+    	}
+    	for (Method initializeMethod : initializeMethods) {
+    		log.debug("@PostConstruct Initialize Method : {}", initializeMethod);
+    		BeanFactoryUtils.invokeMethod(initializeMethod, bean, populateArguments(initializeMethod.getParameterTypes()));
+    	}
+	}
+
+	private Object createAnnotatedBean(BeanDefinition beanDefinition) {
     	AnnotatedBeanDefinition abd = (AnnotatedBeanDefinition) beanDefinition;
         Method method = abd.getMethod();
         Object[] args = populateArguments(method.getParameterTypes());
